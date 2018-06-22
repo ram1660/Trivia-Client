@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,8 +23,6 @@ namespace TheMagshiClient
         public registerWindow()
         {
             InitializeComponent();
-            File file = new File();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

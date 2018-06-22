@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,8 +21,17 @@ namespace TheMagshiClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        Communicator serverCommunicator;
         public MainWindow()
         {
+            if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
+            {
+                MessageBox.Show("Could not find config file in the current directory! Creating new one!");
+                StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
+                writer.WriteLine("server_ip: 127.0.0.1");
+                writer.WriteLine("server_port: 8070");
+
+            }
             InitializeComponent();
         }
 

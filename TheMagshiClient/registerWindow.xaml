@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheMagshiClient"
         mc:Ignorable="d"
-        Title="registerWindow" Height="311.278" Width="461.654">
+        Title="registerWindow" Height="311.278" Width="382.737">
     <Grid Margin="0,0,2,-21">
         <Button Content="Apply" HorizontalAlignment="Left" Margin="150,176,0,0" VerticalAlignment="Top" Width="118" Height="45" Click="Button_Click_1"/>
         <Button Content="Back" HorizontalAlignment="Left" Margin="173,243,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
