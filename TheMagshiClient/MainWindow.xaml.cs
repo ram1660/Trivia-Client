@@ -24,5 +24,12 @@ namespace TheMagshiClient
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            registerWindow register = new registerWindow();
+            register.Show();
+            this.Close();
+        }
     }
 }
