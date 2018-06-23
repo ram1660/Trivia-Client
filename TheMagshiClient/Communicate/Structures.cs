@@ -119,5 +119,13 @@ namespace TheMagshiClient
             this.answerTimeout = answerTimeout;
         }
     }
+    public struct ErrorResponse
+    {
+        string message;
+        public ErrorResponse(string message)
+        {
+            this.message = message;
+        }
+    }
 
 }
