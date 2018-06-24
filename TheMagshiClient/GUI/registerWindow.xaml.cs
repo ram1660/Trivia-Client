@@ -34,6 +34,25 @@ namespace TheMagshiClient
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            if(UsernameTextBox.Text == "" && PasswordTextBox.Text == "" && EmailTextBox.Text == "")
+            {
+                MessageBox.Show("You have to fill all the boxes in order to register!");
+                return;
+            }
+            if(UsernameTextBox.Text == "" && PasswordTextBox.Text == "")
+            {
+                MessageBox.Show("You have to fill the password and the username boxes!");
+                return;
+            }
+            if(UsernameTextBox.Text == "" && EmailTextBox.Text == "")
+            {
+                MessageBox.Show("You have to fill the username and email boxes!");
+                return;
+            }
+            if(PasswordTextBox.Text == "" && EmailTextBox.Text == "")
+            {
+                MessageBox.Show("You have to fill the email and the password boxes!");
+            }
             if(UsernameTextBox.Text == "")
             {
                 MessageBox.Show("You have to fill the username box!");
@@ -49,17 +68,25 @@ namespace TheMagshiClient
                 MessageBox.Show("You have to fill the email box!");
                 return;
             }
+            if(!Regex.IsMatch(PasswordTextBox.Text, @"^[a-zA-Z0-9]+$") && PasswordTextBox.Text.Length < 4)
+            {
+                MessageBox.Show("The password have to contain numbers and letters and be atleast 4 characters!");
+                return;
+            }
             if(!Regex.IsMatch(PasswordTextBox.Text, @"^[a-zA-Z0-9]+$"))
             {
-                MessageBox.Show("The password have to contain numbers and letters");
+                MessageBox.Show("The password have to contain numbers and letters.");
                 return;
             }
             if(PasswordTextBox.Text.Length < 4)
             {
-                MessageBox.Show("The password has to atleast 4 characters");
+                MessageBox.Show("The password has to be atleast 4 characters.");
                 return;
             }
-            Communicator communicator = new Communicator();
+            SignupRequest request = new SignupRequest(UsernameTextBox.Text, PasswordTextBox.Text, EmailTextBox.Text);
+            Communicator communicator = new Communicator("127.0.0.1", 7080);
+            if (!communicator.SendToServer(request))
+                MessageBox.Show("Failed to make a request!");
         }
     }
 }

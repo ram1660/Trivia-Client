@@ -6,35 +6,18 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using Newtonsoft.Json;
+using System.Windows;
+
 namespace TheMagshiClient
 {
-    class Communicator
+    public class Communicator
     {
         private string serverIp;
-        private int serverPort;
-        private Socket server;
+        private Int32 serverPort;
         public Communicator(string serverIp, int port)
         {
-            this.serverIp = serverIp;
             serverPort = port;
-            server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPAddress iPAddress = new IPAddress(byte.Parse(serverIp));
-            try
-            {
-                server.Connect(new IPEndPoint(iPAddress, port));
-            }
-            catch (ArgumentNullException ae)
-            {
-                Console.WriteLine("ArgumentNullException : {0}", ae.ToString());
-            }
-            catch (SocketException se)
-            {
-                Console.WriteLine("SocketException : {0}", se.ToString());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unexpected exception : {0}", e.ToString());
-            }
+            this.serverIp = serverIp;
         }
         string GetServerIp()
         {
@@ -46,14 +29,12 @@ namespace TheMagshiClient
         }
         public bool SendToServer(LoginRequest request)
         {
-            string strRequest = JsonConvert.SerializeObject(request);
-            int len = strRequest.Length;
-            byte code = (byte)Protocols.REQUEST_SIGNIN;
-            string strData = code + len + strRequest;
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(strData);
+            byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                server.Send(data);
+                TcpClient client = new TcpClient(serverIp, serverPort);
+                NetworkStream stream = client.GetStream();
+                stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
             {
@@ -74,14 +55,12 @@ namespace TheMagshiClient
         }
         public bool SendToServer(SignupRequest request)
         {
-            string strRequest = JsonConvert.SerializeObject(request);
-            int len = strRequest.Length;
-            byte code = (byte)Protocols.REQUEST_SIGNIN;
-            string strData = code + len + strRequest;
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(strData);
+            byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                server.Send(data);
+                TcpClient client = new TcpClient(serverIp, serverPort);
+                NetworkStream stream = client.GetStream();
+                stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
             {
@@ -102,9 +81,12 @@ namespace TheMagshiClient
         }
         public bool SendToServer(GetPlayersInRoomRequest request)
         {
+            byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                server.Send(data);
+                TcpClient client = new TcpClient(serverIp, serverPort);
+                NetworkStream stream = client.GetStream();
+                stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
             {

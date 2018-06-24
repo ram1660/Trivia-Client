@@ -21,16 +21,24 @@ namespace TheMagshiClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        Communicator serverCommunicator;
+        static Communicator serverCommunicator;
         public MainWindow()
         {
             if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
             {
                 MessageBox.Show("Could not find config file in the current directory! Creating new one!");
                 StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
-                writer.WriteLine("server_ip: 127.0.0.1");
-                writer.WriteLine("server_port: 8070");
-
+                writer.WriteLine("server_ip:127.0.0.1");
+                writer.WriteLine("server_port:7080");
+                writer.Close();
+                serverCommunicator = new Communicator("127.0.0.1", 7080);
+            }
+            else
+            {
+                string[] lines = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.txt");
+                string serverIp = lines[0].Substring(10);
+                int serverPort = int.Parse(lines[1].Substring(12));
+                serverCommunicator = new Communicator(serverIp, serverPort);
             }
             InitializeComponent();
         }
@@ -40,6 +48,10 @@ namespace TheMagshiClient
             registerWindow register = new registerWindow();
             register.Show();
             this.Close();
+        }
+        public static Communicator GetCommunicator()
+        {
+            return serverCommunicator;
         }
     }
 }

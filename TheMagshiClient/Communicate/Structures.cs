@@ -8,7 +8,7 @@ namespace TheMagshiClient
 {
     public struct LoginRequest
     {
-        string username;
+        public string username;
         string password;
 
         public LoginRequest(string username, string password)
@@ -19,9 +19,9 @@ namespace TheMagshiClient
     }
     public struct SignupRequest
     {
-        string username;
-        string password;
-        string email;
+        public string username;
+        public string password;
+        public string email;
 
         public SignupRequest(string username, string password, string email)
         {
@@ -32,7 +32,7 @@ namespace TheMagshiClient
     }
     public struct GetPlayersInRoomRequest
     {
-        int roomId;
+        public int roomId;
 
         public GetPlayersInRoomRequest(int roomId)
         {
@@ -41,7 +41,7 @@ namespace TheMagshiClient
     }
     public struct JoinRoomRequest
     {
-        int roomId;
+        public int roomId;
 
         public JoinRoomRequest(int roomId)
         {
@@ -50,7 +50,7 @@ namespace TheMagshiClient
     }
     public struct LoginResponse
     {
-        int status;
+        public int status;
 
         public LoginResponse(int status)
         {
@@ -59,7 +59,7 @@ namespace TheMagshiClient
     }
     public struct SignupResponse
     {
-        int status;
+        public int status;
 
         public SignupResponse(int status)
         {
@@ -68,7 +68,7 @@ namespace TheMagshiClient
     }
     public struct LogoutResponse
     {
-        int status;
+        public int status;
 
         public LogoutResponse(int status)
         {
@@ -77,7 +77,7 @@ namespace TheMagshiClient
     }
     public struct JoinRoomResponse
     {
-        int status;
+        public int status;
 
         public JoinRoomResponse(int status)
         {
@@ -86,7 +86,7 @@ namespace TheMagshiClient
     }
     public struct CreateRoomResponse
     {
-        int status;
+        public int status;
 
         public CreateRoomResponse(int status)
         {
@@ -95,7 +95,7 @@ namespace TheMagshiClient
     }
     public struct HighscoreResponse
     {
-        int status;
+        public int status;
         List<Highscore> highscores;
 
         public HighscoreResponse(int status)
@@ -106,10 +106,10 @@ namespace TheMagshiClient
     }
     public struct CreateRoomRequest
     {
-        string roomId;
-        int maxPlayers;
-        int questionCount;
-        int answerTimeout;
+        public string roomId;
+        public int maxPlayers;
+        public int questionCount;
+        public int answerTimeout;
 
         public CreateRoomRequest(string roomId, int maxPlayers, int questionCount, int answerTimeout)
         {
@@ -121,11 +121,23 @@ namespace TheMagshiClient
     }
     public struct ErrorResponse
     {
-        string message;
+        public string message;
         public ErrorResponse(string message)
         {
             this.message = message;
         }
     }
+    public struct Request
+    {
+        public int id;
+        public DateTime sendingTime;
+        public byte[] data;
 
+        public Request(int id, DateTime sendingTime, byte[] data)
+        {
+            this.id = id;
+            this.sendingTime = sendingTime;
+            this.data = data;
+        }
+    }
 }
