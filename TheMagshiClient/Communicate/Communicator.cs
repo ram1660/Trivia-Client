@@ -14,10 +14,14 @@ namespace TheMagshiClient
     {
         private string serverIp;
         private Int32 serverPort;
+        private TcpClient client;
+        private NetworkStream stream;
         public Communicator(string serverIp, int port)
         {
             serverPort = port;
             this.serverIp = serverIp;
+            client = new TcpClient(serverIp, serverPort);
+            stream = client.GetStream();
         }
         string GetServerIp()
         {
@@ -27,13 +31,15 @@ namespace TheMagshiClient
         {
             return serverPort;
         }
+        private void CloseSocket()
+        {
+            client.Close();
+        }
         public bool SendToServer(LoginRequest request)
         {
             byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                TcpClient client = new TcpClient(serverIp, serverPort);
-                NetworkStream stream = client.GetStream();
                 stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
@@ -58,8 +64,6 @@ namespace TheMagshiClient
             byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                TcpClient client = new TcpClient(serverIp, serverPort);
-                NetworkStream stream = client.GetStream();
                 stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
@@ -84,8 +88,6 @@ namespace TheMagshiClient
             byte[] data = JsonRequestPacketSerializer.serializeRequest(request);
             try
             {
-                TcpClient client = new TcpClient(serverIp, serverPort);
-                NetworkStream stream = client.GetStream();
                 stream.Write(data, 0, data.Length);
             }
             catch (SocketException e)
@@ -104,6 +106,14 @@ namespace TheMagshiClient
                 return false;
             }
             return true;
+        }
+        public void recieveRequest(LoginResponse loginResponse)
+        {
+            byte[] data = new byte[4];
+            int status = stream.Read(data, 0, 4), size = 0;
+            for (int i = 1; i < 5; i++) size |= data[i] << (24 - (i - 1) * 8);
+           
+            
         }
     }
 }

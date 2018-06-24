@@ -8,12 +8,12 @@
         Title="Trivia Client" Height="317.647" Width="413.025">
     <Grid HorizontalAlignment="Left" Width="403" Height="284" VerticalAlignment="Top">
         <Button Content="Register" HorizontalAlignment="Left" Margin="62,166,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="275,166,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="139,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Login" HorizontalAlignment="Left" Margin="275,166,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <TextBox x:Name="PasswordLogin" HorizontalAlignment="Left" Height="23" Margin="139,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="124,10,0,0" TextWrapping="Wrap" Text="Trivia Project!" VerticalAlignment="Top" Height="39" Width="135" FontWeight="Bold" TextAlignment="Center" FontSize="20"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="UsernameLogin" HorizontalAlignment="Left" Height="23" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Password" HorizontalAlignment="Left" Margin="74,114,0,0" VerticalAlignment="Top"/>
-        <Label Content="Email" HorizontalAlignment="Left" Margin="96,49,0,0" VerticalAlignment="Top"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="76,49,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

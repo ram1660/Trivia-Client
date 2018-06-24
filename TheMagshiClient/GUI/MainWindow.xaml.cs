@@ -53,5 +53,17 @@ namespace TheMagshiClient
         {
             return serverCommunicator;
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoginRequest request = new LoginRequest(UsernameLogin.Text, PasswordLogin.Text);
+            if(serverCommunicator.SendToServer(request))
+            {
+                MessageBox.Show("Failed to send the request to the server check your connections!");
+                return;
+            }
+            LoginResponse loginResponse = new LoginResponse();
+           serverCommunicator.recieveRequest(loginResponse);
+        }
     }
 }
