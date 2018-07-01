@@ -37,57 +37,57 @@ namespace TheMagshiClient
         {
             if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill all the boxes in order to register!");
+                MessageBox.Show("You have to fill all the boxes in order to register!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "")
             {
-                MessageBox.Show("You have to fill the password and the username boxes!");
+                MessageBox.Show("You have to fill the password and the username boxes!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(UsernameTextBox.Text == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the username and email boxes!");
+                MessageBox.Show("You have to fill the username and email boxes!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the email and the password boxes!");
+                MessageBox.Show("You have to fill the email and the password boxes!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             if(UsernameTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the username box!");
+                MessageBox.Show("You have to fill the username box!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(PasswordRegister.Password.ToString() == "")
             {
-                MessageBox.Show("You have to fill the password box!");
+                MessageBox.Show("You have to fill the password box!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the email box!");
+                MessageBox.Show("You have to fill the email box!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$") && PasswordRegister.Password.ToString().Length < 4)
             {
-                MessageBox.Show("The password have to contain numbers and letters and be atleast 4 characters!");
+                MessageBox.Show("The password have to contain numbers and letters and be atleast 4 characters!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$"))
             {
-                MessageBox.Show("The password have to contain numbers and letters.");
+                MessageBox.Show("The password have to contain numbers and letters.", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if(PasswordRegister.Password.ToString().Length < 4)
             {
-                MessageBox.Show("The password has to be atleast 4 characters.");
+                MessageBox.Show("The password has to be atleast 4 characters.", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             SignupRequest request = new SignupRequest(UsernameTextBox.Text, PasswordRegister.Password.ToString(), EmailTextBox.Text);
             if (!Communicator.SendToServer(request))
             {
-                MessageBox.Show("Failed to make a request!");
+                MessageBox.Show("Failed to make a request!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             Thread.Sleep(200);
@@ -96,7 +96,7 @@ namespace TheMagshiClient
                 if (response.code == (int)Protocols.RESPONSE_SIGNUP)
                 {
                     SignupResponse signupResponse = JsonRequestPacketDeserializer.DeserializeSignupRequest(response.data);
-                    if (signupResponse.status == (int)Protocols.REQUEST_SIGNUP)
+                    if (signupResponse.status == (int)Protocols.RESPONSE_SIGNUP)
                     {
                         this.Close();
                         MenuWindow menue = new MenuWindow();
@@ -107,10 +107,21 @@ namespace TheMagshiClient
                 else if (response.code == (int)Protocols.RESPONSE_ERROR)
                 {
                     ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
-                    MessageBox.Show(errorResponse.message);
+                    MessageBox.Show(errorResponse.message, App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
                 }
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to leave?", App.clientName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                App.serverCommunicator.CloseSocket();
+                Environment.Exit(0);
+            }
+            else
+                e.Cancel = true;
         }
     }
 }

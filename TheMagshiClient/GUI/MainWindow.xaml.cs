@@ -23,49 +23,19 @@ namespace TheMagshiClient
     {
         public MainWindow()
         {
-            //if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
-            //{
-            //    MessageBox.Show("Could not find config file in the current directory! Creating new one!");
-            //    StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
-            //    writer.WriteLine("server_ip:127.0.0.1");
-            //    writer.WriteLine("server_port:7080");
-            //    writer.Close();
-            //    try
-            //    {
-            //        if(serverCommunicator == null)
-            //            serverCommunicator = new Communicator("127.0.0.1", 7080);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        MessageBox.Show("Could not connect to server");
-            //        this.Close();
-            //        return;
-            //    }
-            //}
-            //else
-            //{
-            //    string[] lines = File.ReadAllLines(Directory.GetCurrentDirectory() + "\\config.txt");
-            //    string serverIp = lines[0].Substring(10);
-            //    int serverPort = int.Parse(lines[1].Substring(12));
-            //    try
-            //    {
-            //        if(serverCommunicator == null)
-            //            serverCommunicator = new Communicator("127.0.0.1", 7080);
-            //    }
-            //    catch (Exception)
-            //    {
-            //        MessageBox.Show("Could not connect to server");
-            //        this.Close();
-            //        return;
-            //    }
-            //}
             Closing += MainWindow_Closing;
             InitializeComponent();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+            if (MessageBox.Show("Are you sure you want to leave?", App.clientName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                App.serverCommunicator.CloseSocket();
+                Environment.Exit(0);
+            }
+            else
+                e.Cancel = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -80,16 +50,16 @@ namespace TheMagshiClient
             LoginRequest request = new LoginRequest(UsernameLogin.Text, PasswordLogin.Password.ToString());
             if(!Communicator.SendToServer(request))
             {
-                MessageBox.Show("Failed to send the request to the server check your connections!");
+                MessageBox.Show("Failed to send the request to the server check your connections!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Thread.Sleep(50);
-            for (int i = 0; i < App.requests.Count; i++)
+            Thread.Sleep(200);
+            foreach (ResponseServer response in App.requests)
             {
-                if(App.requests[i].code == (int)Protocols.RESPONSE_SIGNIN)
+                if (response.code == (int)Protocols.RESPONSE_SIGNIN)
                 {
-                    LoginResponse loginResponse = JsonRequestPacketDeserializer.DeserializeLoginRequest(App.requests[i].data);
-                    if (loginResponse.status == (int)Protocols.RESPONSE_SIGNIN)
+                    LoginResponse signupResponse = JsonRequestPacketDeserializer.DeserializeLoginRequest(response.data);
+                    if (signupResponse.status == (int)Protocols.RESPONSE_SIGNIN)
                     {
                         this.Close();
                         MenuWindow menue = new MenuWindow();
@@ -97,14 +67,20 @@ namespace TheMagshiClient
                         break;
                     }
                 }
-                else if(App.requests[i].code == (int)Protocols.RESPONSE_ERROR)
+                else if (response.code == (int)Protocols.RESPONSE_ERROR)
                 {
-                    ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(App.requests[i].data);
-                    MessageBox.Show(errorResponse.message);
+                    ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
+                    MessageBox.Show(errorResponse.message, App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
                 }
             }
 
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.serverCommunicator.CloseSocket();
+            Environment.Exit(0);
         }
     }
 }

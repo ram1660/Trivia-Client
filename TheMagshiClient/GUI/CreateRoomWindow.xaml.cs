@@ -12,24 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TheMagshiClient
+namespace TheMagshiClient.GUI
 {
     /// <summary>
-    /// Interaction logic for MenuWindow.xaml
+    /// Interaction logic for CreateRoomWindow.xaml
     /// </summary>
-    public partial class MenuWindow : Window
+    public partial class CreateRoomWindow : Window
     {
-        public MenuWindow()
+        public CreateRoomWindow()
         {
             InitializeComponent();
-        }
-
-        private void CreateRoomButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Create cw = new MyChildWindow();
-            //cw.ShowInTaskbar = false;
-            //cw.Owner = Application.Current.MainWindow;
-            //cw.Show();
         }
     }
 }

@@ -15,9 +15,6 @@ namespace TheMagshiClient
         private Int32 serverPort;
         private TcpClient client;
         private static NetworkStream stream;
-        private ThreadStart keepAliveThread;
-        private ThreadStart handleRequestsThread;
-        private Thread handleThread;
         public Communicator(string serverIp, int port)
         {
             serverPort = port;
@@ -35,7 +32,7 @@ namespace TheMagshiClient
         {
             return serverPort;
         }
-        private void CloseSocket()
+        public void CloseSocket()
         {
             client.Close();
         }

@@ -21,7 +21,7 @@ namespace TheMagshiClient
         private ThreadStart keepAliveThread;
         public static Communicator serverCommunicator;
         public static ManualResetEvent resetEvent = new ManualResetEvent(true);
-
+        public static string clientName = "TheMagshiClient";
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             if (!InitializeConnection())
@@ -38,7 +38,7 @@ namespace TheMagshiClient
         {
             if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
             {
-                MessageBox.Show("Could not find config file in the current directory! Creating new one!");
+                MessageBox.Show("Could not find config file in the current directory! Creating new one!", clientName, MessageBoxButton.OK, MessageBoxImage.Information);
                 StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
                 writer.WriteLine("server_ip:127.0.0.1");
                 writer.WriteLine("server_port:7080");
@@ -49,7 +49,7 @@ namespace TheMagshiClient
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Could not connect to the server");
+                    MessageBox.Show("Could not connect to the server", clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
                 return true;
@@ -65,7 +65,7 @@ namespace TheMagshiClient
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Could not connect to the server");
+                    MessageBox.Show("Could not connect to the server", clientName, MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
                 return true;

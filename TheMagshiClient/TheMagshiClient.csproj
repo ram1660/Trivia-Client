@@ -58,6 +58,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Communicate\Communicator.cs" />
+    <Compile Include="GUI\CreateRoomWindow.xaml.cs">
+      <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Highscore.cs" />
     <Compile Include="Json\JsonRequestPacketDeserializer.cs" />
     <Compile Include="Json\JsonRequestPacketSerializer.cs" />
@@ -69,6 +72,10 @@
       <DependentUpon>registerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Communicate\Structures.cs" />
+    <Page Include="GUI\CreateRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
