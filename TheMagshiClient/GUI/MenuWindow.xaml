@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheMagshiClient"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="331,40,0,0" TextWrapping="Wrap" Text="MagshiProject main menue" VerticalAlignment="Top" Height="80" Width="156"/>
+        Title="MenuWindow" Height="392.017" Width="647.479">
+    <Grid Margin="0,0,2,-21">
+        <TextBlock HorizontalAlignment="Left" Margin="212,10,0,0" TextWrapping="Wrap" Text="MagshiProject main menu" VerticalAlignment="Top" Height="42" Width="244" FontSize="18" FontWeight="Bold" FontFamily="Rockwell" TextDecorations="{x:Null}"/>
+        <Button x:Name="CreateRoomButton" Content="Create room" HorizontalAlignment="Left" Margin="260,56,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14" Click="CreateRoomButton_Click"/>
+        <Button x:Name="HighscoreButton" Content="Highscores" HorizontalAlignment="Left" Margin="260,233,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14"/>
+        <Button x:Name="StatsButton" Content="Your stats" HorizontalAlignment="Left" Margin="260,174,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold"/>
+        <Button x:Name="JoinRoomButton" Content="Join room" HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14"/>
 
     </Grid>
 </Window>

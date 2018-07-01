@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,6 +20,7 @@ namespace TheMagshiClient
     /// </summary>
     public partial class registerWindow : Window
     {
+        static Communicator communicator = App.serverCommunicator;
         public registerWindow()
         {
             InitializeComponent();
@@ -34,12 +35,12 @@ namespace TheMagshiClient
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if(UsernameTextBox.Text == "" && PasswordTextBox.Text == "" && EmailTextBox.Text == "")
+            if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
                 MessageBox.Show("You have to fill all the boxes in order to register!");
                 return;
             }
-            if(UsernameTextBox.Text == "" && PasswordTextBox.Text == "")
+            if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "")
             {
                 MessageBox.Show("You have to fill the password and the username boxes!");
                 return;
@@ -49,7 +50,7 @@ namespace TheMagshiClient
                 MessageBox.Show("You have to fill the username and email boxes!");
                 return;
             }
-            if(PasswordTextBox.Text == "" && EmailTextBox.Text == "")
+            if(PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
                 MessageBox.Show("You have to fill the email and the password boxes!");
             }
@@ -58,7 +59,7 @@ namespace TheMagshiClient
                 MessageBox.Show("You have to fill the username box!");
                 return;
             }
-            if(PasswordTextBox.Text == "")
+            if(PasswordRegister.Password.ToString() == "")
             {
                 MessageBox.Show("You have to fill the password box!");
                 return;
@@ -68,25 +69,48 @@ namespace TheMagshiClient
                 MessageBox.Show("You have to fill the email box!");
                 return;
             }
-            if(!Regex.IsMatch(PasswordTextBox.Text, @"^[a-zA-Z0-9]+$") && PasswordTextBox.Text.Length < 4)
+            if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$") && PasswordRegister.Password.ToString().Length < 4)
             {
                 MessageBox.Show("The password have to contain numbers and letters and be atleast 4 characters!");
                 return;
             }
-            if(!Regex.IsMatch(PasswordTextBox.Text, @"^[a-zA-Z0-9]+$"))
+            if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$"))
             {
                 MessageBox.Show("The password have to contain numbers and letters.");
                 return;
             }
-            if(PasswordTextBox.Text.Length < 4)
+            if(PasswordRegister.Password.ToString().Length < 4)
             {
                 MessageBox.Show("The password has to be atleast 4 characters.");
                 return;
             }
-            SignupRequest request = new SignupRequest(UsernameTextBox.Text, PasswordTextBox.Text, EmailTextBox.Text);
-            Communicator communicator = new Communicator("127.0.0.1", 7080);
-            if (!communicator.SendToServer(request))
+            SignupRequest request = new SignupRequest(UsernameTextBox.Text, PasswordRegister.Password.ToString(), EmailTextBox.Text);
+            if (!Communicator.SendToServer(request))
+            {
                 MessageBox.Show("Failed to make a request!");
+                return;
+            }
+            Thread.Sleep(200);
+            foreach (ResponseServer response in App.requests)
+            {
+                if (response.code == (int)Protocols.RESPONSE_SIGNUP)
+                {
+                    SignupResponse signupResponse = JsonRequestPacketDeserializer.DeserializeSignupRequest(response.data);
+                    if (signupResponse.status == (int)Protocols.REQUEST_SIGNUP)
+                    {
+                        this.Close();
+                        MenuWindow menue = new MenuWindow();
+                        menue.Show();
+                        break;
+                    }
+                }
+                else if (response.code == (int)Protocols.RESPONSE_ERROR)
+                {
+                    ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
+                    MessageBox.Show(errorResponse.message);
+                    break;
+                }
+            }
         }
     }
 }

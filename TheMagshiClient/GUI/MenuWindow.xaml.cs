@@ -23,5 +23,13 @@ namespace TheMagshiClient
         {
             InitializeComponent();
         }
+
+        private void CreateRoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            MyChildWindow cw = new MyChildWindow();
+            cw.ShowInTaskbar = false;
+            cw.Owner = Application.Current.MainWindow;
+            cw.Show();
+        }
     }
 }

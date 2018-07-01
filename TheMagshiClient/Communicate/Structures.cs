@@ -9,7 +9,7 @@ namespace TheMagshiClient
     public struct LoginRequest
     {
         public string username;
-        string password;
+        public string password;
 
         public LoginRequest(string username, string password)
         {
@@ -138,6 +138,40 @@ namespace TheMagshiClient
             this.id = id;
             this.sendingTime = sendingTime;
             this.data = data;
+        }
+    }
+    public struct DisconnectRequest
+    {
+        public int code;
+        public DisconnectRequest(int code)
+        {
+            this.code = code;
+        }
+    }
+    public struct ResponseServer
+    {
+        public int code;
+        public byte[] data;
+        public ResponseServer(int code, byte[] data)
+        {
+            this.code = code;
+            this.data = data;
+        }
+    }
+    public struct KeepAliveRequest
+    {
+        public int code;
+        public KeepAliveRequest(int code)
+        {
+            this.code = code;
+        }
+    }
+    public struct KeepAliveResponse
+    {
+        public int code;
+        public KeepAliveResponse(int code)
+        {
+            this.code = code;
         }
     }
 }
