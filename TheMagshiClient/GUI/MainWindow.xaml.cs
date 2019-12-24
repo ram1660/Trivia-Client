@@ -21,6 +21,7 @@ namespace TheMagshiClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly registerWindow registerWindow = App.registerWindow;
         public MainWindow()
         {
             Closing += MainWindow_Closing;
@@ -29,7 +30,7 @@ namespace TheMagshiClient
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to leave?", App.clientName, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to leave?", App.CLIENT_NAME, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 App.serverCommunicator.CloseSocket();
                 Environment.Exit(0);
@@ -40,8 +41,7 @@ namespace TheMagshiClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            registerWindow register = new registerWindow();
-            register.Show();
+            registerWindow.Show();
             this.Hide();
         }
 
@@ -50,10 +50,10 @@ namespace TheMagshiClient
             LoginRequest request = new LoginRequest(UsernameLogin.Text, PasswordLogin.Password.ToString());
             if(!Communicator.SendToServer(request))
             {
-                MessageBox.Show("Failed to send the request to the server check your connections!", App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Failed to send the request to the server check your connections!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Thread.Sleep(200);
+            while (App.requests.Count == 0) ;
             foreach (ResponseServer response in App.requests)
             {
                 if (response.code == (int)Protocols.RESPONSE_SIGNIN)
@@ -61,8 +61,8 @@ namespace TheMagshiClient
                     LoginResponse signupResponse = JsonRequestPacketDeserializer.DeserializeLoginRequest(response.data);
                     if (signupResponse.status == (int)Protocols.RESPONSE_SIGNIN)
                     {
-                        this.Close();
-                        MenuWindow menue = new MenuWindow();
+                        this.Hide();
+                        MenuWindow menue = new MenuWindow(UsernameLogin.Text);
                         menue.Show();
                         break;
                     }
@@ -70,7 +70,7 @@ namespace TheMagshiClient
                 else if (response.code == (int)Protocols.RESPONSE_ERROR)
                 {
                     ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
-                    MessageBox.Show(errorResponse.message, App.clientName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(errorResponse.message, App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
                 }
             }

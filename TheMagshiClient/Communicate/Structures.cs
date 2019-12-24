@@ -30,6 +30,15 @@ namespace TheMagshiClient
             this.email = email;
         }
     }
+    public struct SignupResponse
+    {
+        public int status;
+
+        public SignupResponse(int status)
+        {
+            this.status = status;
+        }
+    }
     public struct GetPlayersInRoomRequest
     {
         public int roomId;
@@ -57,15 +66,7 @@ namespace TheMagshiClient
             this.status = status;
         }
     }
-    public struct SignupResponse
-    {
-        public int status;
-
-        public SignupResponse(int status)
-        {
-            this.status = status;
-        }
-    }
+    
     public struct LogoutResponse
     {
         public int status;
@@ -143,9 +144,11 @@ namespace TheMagshiClient
     public struct DisconnectRequest
     {
         public int code;
-        public DisconnectRequest(int code)
+        public string username;
+        public DisconnectRequest(int code, string username)
         {
             this.code = code;
+            this.username = username;
         }
     }
     public struct ResponseServer

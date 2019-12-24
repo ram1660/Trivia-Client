@@ -23,7 +23,6 @@ namespace TheMagshiClient
         RESPONSE_GET_HIGHSCORE = 18,
         REQUEST_GET_MY_STATS = 29,
         RESPONSE_GET_MY_STATS = 19,
-        REQUEST_DISCONNECT = 31,
         REQUEST_KEEP_ALIVE = 32,
         RESPONSE_KEEP_ALIVE = 42
     };

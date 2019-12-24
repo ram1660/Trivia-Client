@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="MenuWindow" Height="392.017" Width="647.479">
     <Grid Margin="0,0,2,-21">
-        <TextBlock HorizontalAlignment="Left" Margin="212,10,0,0" TextWrapping="Wrap" Text="MagshiProject main menu" VerticalAlignment="Top" Height="42" Width="244" FontSize="18" FontWeight="Bold" FontFamily="Rockwell" TextDecorations="{x:Null}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="212,5,0,0" TextWrapping="Wrap" Text="MagshiProject main menu" VerticalAlignment="Top" Height="25" Width="244" FontSize="18" FontWeight="Bold" FontFamily="Rockwell" TextDecorations="{x:Null}" IsEnabled="False"/>
         <Button x:Name="CreateRoomButton" Content="Create room" HorizontalAlignment="Left" Margin="260,56,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14" Click="CreateRoomButton_Click"/>
         <Button x:Name="HighscoreButton" Content="Highscores" HorizontalAlignment="Left" Margin="260,233,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14"/>
         <Button x:Name="StatsButton" Content="Your stats" HorizontalAlignment="Left" Margin="260,174,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold"/>
         <Button x:Name="JoinRoomButton" Content="Join room" HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Width="147" Height="54" FontWeight="Bold" FontSize="14"/>
+        <Label x:Name="userNameLabel" Content="Welcome {0}" HorizontalAlignment="Left" Margin="212,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-0.246" Width="425" Height="29" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="LogoutButton" Content="Logout" HorizontalAlignment="Left" Margin="287,303,0,0" VerticalAlignment="Top" Width="75" FontSize="16" FontWeight="Bold" Click="LogoutButton_Click"/>
 
     </Grid>
 </Window>

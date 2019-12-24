@@ -19,9 +19,14 @@ namespace TheMagshiClient
     /// </summary>
     public partial class MenuWindow : Window
     {
-        public MenuWindow()
+        private readonly string PLAYER_NAME;
+        public MenuWindow(string userName)
         {
+            PLAYER_NAME = userName; 
             InitializeComponent();
+            string welcomeText = userNameLabel.Content.ToString();
+            welcomeText = string.Format(welcomeText, PLAYER_NAME);
+            userNameLabel.Content = welcomeText;
         }
 
         private void CreateRoomButton_Click(object sender, RoutedEventArgs e)
@@ -30,6 +35,13 @@ namespace TheMagshiClient
             //cw.ShowInTaskbar = false;
             //cw.Owner = Application.Current.MainWindow;
             //cw.Show();
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            Communicator.SendToServer(new DisconnectRequest((int)Protocols.REQUEST_SIGNOUT, PLAYER_NAME));
+            this.Hide();
+            App.mainWindow.Show();
         }
     }
 }

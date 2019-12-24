@@ -12,16 +12,19 @@ namespace TheMagshiClient
     public class Communicator
     {
         private string serverIp;
-        private Int32 serverPort;
+        private int serverPort;
         private TcpClient client;
         private static NetworkStream stream;
+        private ThreadStart keepAliveThread;
+        private Thread keepThread;
+
         public Communicator(string serverIp, int port)
         {
             serverPort = port;
             this.serverIp = serverIp;
             client = new TcpClient(serverIp, serverPort);
             stream = client.GetStream();
-            //keepAliveThread = new ThreadStart(keepAliveThread);
+            //keepAliveThread = new ThreadStart(KeepAlive);
             //keepThread = new Thread(keepAliveThread);
         }
         string GetServerIp()
@@ -85,6 +88,30 @@ namespace TheMagshiClient
             return true;
         }
         public static bool SendToServer(GetPlayersInRoomRequest request)
+        {
+            byte[] data = JsonRequestPacketSerializer.SerializeRequest(request);
+            try
+            {
+                stream.Write(data, 0, data.Length);
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine(e.ErrorCode);
+                return false;
+            }
+            catch (ObjectDisposedException e)
+            {
+                Console.WriteLine("Someting went wrong in " + e.ObjectName);
+                return false;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Something very wrong that we don't know happened!\n {0}", e.Message);
+                return false;
+            }
+            return true;
+        }
+        public static bool SendToServer(DisconnectRequest request)
         {
             byte[] data = JsonRequestPacketSerializer.SerializeRequest(request);
             try

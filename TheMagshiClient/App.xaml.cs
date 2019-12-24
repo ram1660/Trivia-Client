@@ -20,8 +20,9 @@ namespace TheMagshiClient
         private ThreadStart handleRequestsStarter;
         private ThreadStart keepAliveThread;
         public static Communicator serverCommunicator;
-        public static ManualResetEvent resetEvent = new ManualResetEvent(true);
-        public static string clientName = "TheMagshiClient";
+        public const string CLIENT_NAME = "TheMagshiClient";
+        public readonly static registerWindow registerWindow = new registerWindow();
+        public readonly static MainWindow mainWindow = new MainWindow();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             if (!InitializeConnection())
@@ -38,7 +39,7 @@ namespace TheMagshiClient
         {
             if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
             {
-                MessageBox.Show("Could not find config file in the current directory! Creating new one!", clientName, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Could not find config file in the current directory! Creating new one!", CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Information);
                 StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
                 writer.WriteLine("server_ip:127.0.0.1");
                 writer.WriteLine("server_port:7080");
@@ -49,7 +50,7 @@ namespace TheMagshiClient
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Could not connect to the server", clientName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Could not connect to the server", CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
                 return true;
@@ -65,7 +66,7 @@ namespace TheMagshiClient
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Could not connect to the server", clientName, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Could not connect to the server", CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
                 return true;

@@ -80,7 +80,7 @@ namespace TheMagshiClient
         {
             ArrayList arrayBuff = new ArrayList();
             string strRequest = JsonConvert.SerializeObject(request);
-            arrayBuff.Add((byte)Protocols.REQUEST_DISCONNECT);
+            arrayBuff.Add((byte)Protocols.REQUEST_SIGNOUT);
             for (int i = 0; i < 4; i++)
                 arrayBuff.Add((char)(strRequest.Length >> ((3 - i) * 8)));
             for (int i = 0; i < strRequest.Length; i++)
