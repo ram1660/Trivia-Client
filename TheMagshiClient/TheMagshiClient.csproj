@@ -39,6 +39,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -60,6 +62,12 @@
     <Compile Include="Communicate\Communicator.cs" />
     <Compile Include="GUI\CreateRoomWindow.xaml.cs">
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\MyMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\MyMessageBox.Designer.cs">
+      <DependentUpon>MyMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Highscore.cs" />
     <Compile Include="Json\JsonRequestPacketDeserializer.cs" />

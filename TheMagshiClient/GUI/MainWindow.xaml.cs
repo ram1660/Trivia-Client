@@ -50,7 +50,9 @@ namespace TheMagshiClient
             LoginRequest request = new LoginRequest(UsernameLogin.Text, PasswordLogin.Password.ToString());
             if(!Communicator.SendToServer(request))
             {
-                MessageBox.Show("Failed to send the request to the server check your connections!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                serverMessages.Content = "Failed to send the request to the server check your connections!";
+                SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                serverMessages.Foreground = brush;
                 return;
             }
             while (App.requests.Count == 0) ;

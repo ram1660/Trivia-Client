@@ -15,6 +15,7 @@
         <Label Content="Username" HorizontalAlignment="Left" Margin="76,49,0,0" VerticalAlignment="Top"/>
         <PasswordBox x:Name="PasswordLogin" HorizontalAlignment="Left" Margin="139,122,0,0" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Margin="160,202,0,0" VerticalAlignment="Top" Width="75" Click="ExitButton_Click"/>
+        <Label x:Name="serverMessages" Content="" HorizontalAlignment="Left" Margin="124,145,0,0" VerticalAlignment="Top" Width="151" FontWeight="Bold" FontSize="16"/>
 
     </Grid>
 </Window>
