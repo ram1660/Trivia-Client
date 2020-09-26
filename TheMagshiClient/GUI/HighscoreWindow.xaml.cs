@@ -15,13 +15,17 @@ using System.Windows.Shapes;
 namespace TheMagshiClient.GUI
 {
     /// <summary>
-    /// Interaction logic for CreateRoomWindow.xaml
+    /// Interaction logic for HighscoreWindow.xaml
     /// </summary>
-    public partial class CreateRoomWindow : Window
+    public partial class HighscoreWindow : Window
     {
-        public CreateRoomWindow()
+        public HighscoreWindow(List<HighscoreRecord> records)
         {
             InitializeComponent();
+            foreach (HighscoreRecord record in records)
+            {
+                HighscoreTable.Items.Add(record);
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using TheMagshiClient.GUI;
 namespace TheMagshiClient
 {
     /// <summary>
@@ -36,59 +36,71 @@ namespace TheMagshiClient
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
+            MyMessageBox messageBox = new MyMessageBox("You have to fill all the boxes in order to register!", App.CLIENT_NAME);
+            if (UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill all the boxes in order to register!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.ShowDialog();
                 return;
             }
             if(UsernameTextBox.Text == "" && PasswordRegister.Password.ToString() == "")
             {
-                MessageBox.Show("You have to fill the password and the username boxes!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the password and the username boxes!";
+                messageBox.ShowDialog();
                 return;
             }
             if(UsernameTextBox.Text == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the username and email boxes!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the username and email boxes!";
+                messageBox.ShowDialog();
                 return;
             }
             if(PasswordRegister.Password.ToString() == "" && EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the email and the password boxes!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the email and the password boxes!";
+                messageBox.ShowDialog();
+                return;
             }
             if(UsernameTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the username box!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the username box!";
+                messageBox.ShowDialog();
                 return;
             }
             if(PasswordRegister.Password.ToString() == "")
             {
-                MessageBox.Show("You have to fill the password box!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the password box!";
+                messageBox.ShowDialog();
                 return;
             }
             if(EmailTextBox.Text == "")
             {
-                MessageBox.Show("You have to fill the email box!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "You have to fill the email box!";
+                messageBox.ShowDialog();
                 return;
             }
             if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$") && PasswordRegister.Password.ToString().Length < 4)
             {
-                MessageBox.Show("The password have to contain numbers and letters and be atleast 4 characters!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "The password have to contain numbers and letters and be atleast 4 characters!";
+                messageBox.ShowDialog();
                 return;
             }
             if(!Regex.IsMatch(PasswordRegister.Password.ToString(), @"^[a-zA-Z0-9]+$"))
             {
-                MessageBox.Show("The password have to contain numbers and letters.", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "The password have to contain numbers and letters.";
+                messageBox.ShowDialog();
                 return;
             }
             if(PasswordRegister.Password.ToString().Length < 4)
             {
-                MessageBox.Show("The password has to be atleast 4 characters.", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                messageBox.Text = "The password has to be atleast 4 characters.";
+                messageBox.ShowDialog();
                 return;
             }
             SignupRequest request = new SignupRequest(UsernameTextBox.Text, PasswordRegister.Password.ToString(), EmailTextBox.Text);
             if (!Communicator.SendToServer(request))
             {
-                MessageBox.Show("Failed to make a request!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Warning);
+                messageBox.Text = "Failed to make a request!";
+                messageBox.ShowDialog();
                 return;
             }
             Thread.Sleep(200);
@@ -99,7 +111,8 @@ namespace TheMagshiClient
                     SignupResponse signupResponse = JsonRequestPacketDeserializer.DeserializeSignupRequest(response.data);
                     if (signupResponse.status == (int)Protocols.RESPONSE_SIGNUP)
                     {
-                        MessageBox.Show("You have been registered to the system! Please login!", App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Information);
+                        messageBox.Text = "You have been registered to the system! Please login!";
+                        messageBox.ShowDialog();
                         MenuWindow menue = new MenuWindow(UsernameTextBox.Text);
                         menue.Show();
                         //this.Hide();
@@ -111,7 +124,8 @@ namespace TheMagshiClient
                 else if (response.code == (int)Protocols.RESPONSE_ERROR)
                 {
                     ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
-                    MessageBox.Show(errorResponse.message, App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                    messageBox.Text = errorResponse.message;
+                    messageBox.ShowDialog();
                     break;
                 }
             }

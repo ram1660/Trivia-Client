@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-
+using TheMagshiClient.GUI;
 namespace TheMagshiClient
 {
     /// <summary>
@@ -39,7 +39,7 @@ namespace TheMagshiClient
         {
             if (!File.Exists(Directory.GetCurrentDirectory() + "\\config.txt"))
             {
-                MessageBox.Show("Could not find config file in the current directory! Creating new one!", CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Could not find config file in the current directory! Creating a new one!", CLIENT_NAME);
                 StreamWriter writer = File.CreateText(Directory.GetCurrentDirectory() + "\\config.txt");
                 writer.WriteLine("server_ip:127.0.0.1");
                 writer.WriteLine("server_port:7080");

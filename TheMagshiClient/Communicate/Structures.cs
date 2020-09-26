@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TheMagshiClient
 {
+    public struct HighscoreRecord
+    {
+        public string Username { get; set; }
+        public int Score { get; set; }
+    }
     public struct LoginRequest
     {
         public string username;
@@ -97,12 +102,20 @@ namespace TheMagshiClient
     public struct HighscoreResponse
     {
         public int status;
-        List<Highscore> highscores;
+        public List<HighscoreRecord> highscores;
 
-        public HighscoreResponse(int status)
+        public HighscoreResponse(int status, List<HighscoreRecord> highscoresTable)
         {
             this.status = status;
-            highscores = new List<Highscore>();
+            this.highscores = highscoresTable;
+        }
+    }
+    public struct HighscoreRequest
+    {
+        public int code;
+        public HighscoreRequest(int code)
+        {
+            this.code = code;
         }
     }
     public struct CreateRoomRequest

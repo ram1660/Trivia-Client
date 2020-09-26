@@ -8,5 +8,6 @@ namespace TheMagshiClient
 {
     class Highscore
     {
+
     }
 }

@@ -32,5 +32,12 @@ namespace TheMagshiClient
             ErrorResponse errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(strRequest);
             return errorResponse;
         }
+
+        public static HighscoreResponse DeserializeHighscoreResponse(byte[] request)
+        {
+            string strRequest = Encoding.UTF8.GetString(request);
+            HighscoreResponse highscoreResponse = JsonConvert.DeserializeObject<HighscoreResponse>(strRequest);
+            return highscoreResponse;
+        }
     }
 }

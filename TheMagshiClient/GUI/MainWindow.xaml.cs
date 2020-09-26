@@ -1,18 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TheMagshiClient.GUI;
 
 namespace TheMagshiClient
 {
@@ -30,7 +19,9 @@ namespace TheMagshiClient
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to leave?", App.CLIENT_NAME, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            QuestionWindow exitWindow = new QuestionWindow("Are you sure you want to leave?", App.CLIENT_NAME);
+            exitWindow.Show();
+            if (exitWindow.IsYes)
             {
                 App.serverCommunicator.CloseSocket();
                 Environment.Exit(0);
@@ -72,7 +63,8 @@ namespace TheMagshiClient
                 else if (response.code == (int)Protocols.RESPONSE_ERROR)
                 {
                     ErrorResponse errorResponse = JsonRequestPacketDeserializer.DeserializeErrorResponse(response.data);
-                    MessageBox.Show(errorResponse.message, App.CLIENT_NAME, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MyMessageBox errorMessage = new MyMessageBox(errorResponse.message, App.CLIENT_NAME);
+                    errorMessage.Show();
                     break;
                 }
             }

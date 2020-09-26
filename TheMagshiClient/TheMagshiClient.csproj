@@ -60,14 +60,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Communicate\Communicator.cs" />
-    <Compile Include="GUI\CreateRoomWindow.xaml.cs">
-      <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
+    <Compile Include="GUI\HighscoreWindow.xaml.cs">
+      <DependentUpon>HighscoreWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MyMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\MyMessageBox.Designer.cs">
       <DependentUpon>MyMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\QuestionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\QuestionWindow.Designer.cs">
+      <DependentUpon>QuestionWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RoomCreatorWindow.xaml.cs">
+      <DependentUpon>RoomCreatorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Highscore.cs" />
     <Compile Include="Json\JsonRequestPacketDeserializer.cs" />
@@ -80,7 +89,7 @@
       <DependentUpon>registerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Communicate\Structures.cs" />
-    <Page Include="GUI\CreateRoomWindow.xaml">
+    <Page Include="GUI\HighscoreWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,6 +113,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\RoomCreatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -119,6 +132,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="GUI\MyMessageBox.resx">
+      <DependentUpon>MyMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\QuestionWindow.resx">
+      <DependentUpon>QuestionWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
